@@ -10,5 +10,5 @@ export interface Ability {
   additionalEffect?: (
     source: Character,
     target: Character
-  ) => { source: Character; target: Character };
+  ) => { updatedSource: Character; updatedTarget: Character };
 }
