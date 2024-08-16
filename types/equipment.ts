@@ -1,9 +1,9 @@
 import type { Character } from "./character";
-import type { Stats } from "./stats";
+import type { PartialStats } from "./stats";
 
 export interface Equipment {
   name: string;
-  stats: Stats;
+  stats?: PartialStats;
   isEpic?: boolean;
   additionalEffect?: (
     source: Character,
