@@ -1,6 +1,7 @@
+<script setup lang="ts">
+import Main from "./layout/Main.vue";
+</script>
+
 <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <Main />
 </template>

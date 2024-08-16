@@ -1,6 +1,6 @@
 export enum Status {
-  POISONED = "poisoned",
-  BURNING = "burning",
+  POISONED = "poisoned", // low dmg each turn
+  BURNING = "burning", // high dmg for 3 turns
   STUNNED = "stunned",
   CONFUSED = "confused",
 }

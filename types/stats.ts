@@ -11,5 +11,3 @@ export type Stats = {
   [CombatType.INT]: number;
   [CombatType.AGI]: number;
 };
-
-export type PartialStats = Partial<Stats>;
