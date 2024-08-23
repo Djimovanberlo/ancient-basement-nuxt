@@ -1,14 +1,20 @@
 import type { Character } from "./character";
-import type { CombatType } from "./stats";
+import type { DamageType, ElementName } from "./element";
 
 export interface Ability {
   name: string;
   power: number;
-  combatType?: CombatType;
+  damageType: DamageType;
+  element?: ElementName;
   stacks?: number; // if undefined, the ability has infinite stacks
   isEpic?: boolean;
   additionalEffect?: (
     source: Character,
     target: Character
   ) => { updatedSource: Character; updatedTarget: Character };
+}
+
+export enum AbilityName {
+  Attack = "Attack",
+  Fireball = "Fireball",
 }

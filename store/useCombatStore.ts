@@ -1,24 +1,14 @@
 import { defineStore } from "pinia";
+import { initEnemy, initPlayer } from "~/lib/charater";
+import { calculateDamage } from "~/lib/combat";
 import type { Ability } from "~/types/ability";
 import type { Character } from "~/types/character";
 
-const initCharacter: Character = {
-  name: "Player",
-  stats: {
-    currentHealth: 100,
-    maxHealth: 100,
-    strength: 10,
-    agility: 5,
-    intelligence: 5,
-  },
-  abilities: [],
-  equipment: [],
-};
-
 export const useCombatStore = defineStore("combat", () => {
-  const player = ref<Character>(initCharacter);
-  const enemy = ref<Character>(initCharacter);
+  const player = ref<Character>(initPlayer);
+  const enemy = ref<Character>(initEnemy);
 
+  // TODO think about let and const clearly, in terms calculating damage & applying additional effects
   const _executeAbility = (
     source: Character,
     target: Character,
@@ -28,17 +18,22 @@ export const useCombatStore = defineStore("combat", () => {
     let targetCopy = { ...target };
 
     // Apply base damage / defense logic here
+    // TEMP
+    const damage = calculateDamage(sourceCopy, targetCopy, ability);
 
-    if (ability.additionalEffect) {
-      const { updatedSource, updatedTarget } = ability.additionalEffect(
-        sourceCopy,
-        targetCopy
-      );
-      updatedSource;
-      updatedTarget;
+    targetCopy.stats.currentHealth -= damage;
+
+    if (!ability.additionalEffect) {
+      return { updatedSource: sourceCopy, updatedTarget: targetCopy };
     }
 
-    return { updatedSource: sourceCopy, updatedTarget: targetCopy };
+    // If present, apply additional effect after core damage logic
+    const { updatedSource, updatedTarget } = ability.additionalEffect(
+      sourceCopy,
+      targetCopy
+    );
+
+    return { updatedSource, updatedTarget };
   };
 
   // Actions to execute abilities
@@ -62,6 +57,7 @@ export const useCombatStore = defineStore("combat", () => {
     player.value = updatedTarget;
   };
 
+  // Actions to update values
   const updatePlayer = (playerValue: Character) => {
     player.value = playerValue;
   };

@@ -1,13 +1,9 @@
-export enum CombatType {
-  STR = "strength",
-  INT = "intelligence",
-  AGI = "agility",
-}
-
 export type Stats = {
   currentHealth: number;
   maxHealth: number;
-  [CombatType.STR]: number;
-  [CombatType.INT]: number;
-  [CombatType.AGI]: number;
+  strength: number; // physical damage
+  intelligence: number; // magic damage
+  defense: number; // physical resistance
+  resistance: number; // magic resistance
+  agility: number; // speed, avoidance
 };

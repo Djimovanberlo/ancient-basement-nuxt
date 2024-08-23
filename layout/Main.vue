@@ -21,6 +21,6 @@ main {
   width: min(90vw, @max-width);
 
   background-color: #f0f0f0;
-  border: 3px solid green;
+  border: 3px solid rgb(13, 1, 90);
 }
 </style>

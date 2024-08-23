@@ -3,8 +3,8 @@
     <AbilityPanel />
     <Player />
     <Enemy />
-    <Stats class="enemy-stats" />
-    <Stats class="player-stats" />
+    <StatsPlayer />
+    <StatsEnemy />
   </div>
 </template>
 
@@ -34,13 +34,13 @@
     border: 3px solid black;
   }
 
-  .enemy-stats {
+  .stats-enemy {
     grid-column: 1 / 7;
     grid-row: 1 / 2;
     border: 3px solid black;
   }
 
-  .player-stats {
+  .stats-player {
     grid-column: 7 / 13;
     grid-row: 9 / 10;
     border: 3px solid black;

@@ -1,5 +1,7 @@
 import type { Equipment } from "~/types/equipment";
 
+// Out of scope for MVP
+
 const createEquipment = (equipment: Equipment): Equipment => {
   return {
     name: equipment.name,
