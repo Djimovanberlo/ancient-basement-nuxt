@@ -29,3 +29,20 @@ export const fireball = createAbility({
     return { updatedSource: source, updatedTarget: target };
   },
 });
+
+export const heal = createAbility({
+  name: AbilityName.Heal,
+  power: 10,
+  damageType: "magical",
+  additionalEffect: (source, target) => {
+    source.stats.currentHealth += 5;
+    return { updatedSource: source, updatedTarget: target };
+  },
+});
+
+export const abilitiesTable: Record<string, Ability> = {
+  attack: attack,
+  fireball: fireball,
+  heal: heal,
+  // Add other abilities here as you define them
+};

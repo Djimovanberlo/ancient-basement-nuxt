@@ -15,6 +15,7 @@ export interface Ability {
 }
 
 export enum AbilityName {
-  Attack = "Attack",
-  Fireball = "Fireball",
+  Attack = "attack",
+  Fireball = "fireball",
+  Heal = "heal",
 }

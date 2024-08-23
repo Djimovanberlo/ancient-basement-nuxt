@@ -3,19 +3,20 @@
 </template>
 
 <script setup lang="ts">
-import { attack } from "~/lib/ability";
 import { useCombatStore } from "~/store/useCombatStore";
+import { AbilityName } from "~/types/ability";
 
 const { executePlayerAbility } = useCombatStore();
 
 const slap = () => {
-  executePlayerAbility(attack);
+  executePlayerAbility(AbilityName.Attack);
 };
 </script>
 
 <style lang="less" scoped>
 .ability-panel {
-  display: flex;
+  display: grid;
+  background-color: lightgray;
 
   button {
     margin-left: auto;

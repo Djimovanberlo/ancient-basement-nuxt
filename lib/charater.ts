@@ -1,4 +1,5 @@
 import type { Character } from "~/types/character";
+import { AbilityName } from "~/types/ability";
 
 const createCharacter = (character: Character): Character => {
   return {
@@ -19,7 +20,7 @@ export const initPlayer = createCharacter({
     resistance: 5,
     agility: 5,
   },
-  abilities: [],
+  abilities: [AbilityName.Fireball, AbilityName.Heal],
 });
 
 export const initEnemy = createCharacter({

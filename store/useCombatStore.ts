@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
+import { abilitiesTable } from "~/lib/ability";
 import { initEnemy, initPlayer } from "~/lib/charater";
 import { calculateDamage } from "~/lib/combat";
-import type { Ability } from "~/types/ability";
+import type { AbilityName } from "~/types/ability";
 import type { Character } from "~/types/character";
 
 export const useCombatStore = defineStore("combat", () => {
@@ -12,13 +13,14 @@ export const useCombatStore = defineStore("combat", () => {
   const _executeAbility = (
     source: Character,
     target: Character,
-    ability: Ability
+    abilityName: AbilityName
   ) => {
     let sourceCopy = { ...source };
     let targetCopy = { ...target };
 
     // Apply base damage / defense logic here
     // TEMP
+    const ability = abilitiesTable[abilityName];
     const damage = calculateDamage(sourceCopy, targetCopy, ability);
 
     targetCopy.stats.currentHealth -= damage;
@@ -37,21 +39,21 @@ export const useCombatStore = defineStore("combat", () => {
   };
 
   // Actions to execute abilities
-  const executePlayerAbility = (ability: Ability) => {
+  const executePlayerAbility = (abilityName: AbilityName) => {
     const { updatedSource, updatedTarget } = _executeAbility(
       player.value,
       enemy.value,
-      ability
+      abilityName
     );
     player.value = updatedSource;
     enemy.value = updatedTarget;
   };
 
-  const executeEnemyAbility = (ability: Ability) => {
+  const executeEnemyAbility = (abilityName: AbilityName) => {
     const { updatedSource, updatedTarget } = _executeAbility(
       enemy.value,
       player.value,
-      ability
+      abilityName
     );
     enemy.value = updatedSource;
     player.value = updatedTarget;
