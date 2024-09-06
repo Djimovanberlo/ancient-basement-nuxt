@@ -4,10 +4,27 @@ import { initEnemy, initPlayer } from "~/lib/charater";
 import { calculateDamage } from "~/lib/combat";
 import type { AbilityName } from "~/types/ability";
 import type { Character } from "~/types/character";
+import { useGameStore } from "./useGameStore";
 
 export const useCombatStore = defineStore("combat", () => {
+  const gameStore = useGameStore();
+
   const player = ref<Character>(initPlayer);
   const enemy = ref<Character>(initEnemy);
+
+  watch(
+    () => player.value.stats.currentHealth,
+    (newVal) => {
+      if (newVal <= 0) gameStore.loseGame();
+    }
+  );
+
+  watch(
+    () => enemy.value.stats.currentHealth,
+    (newVal) => {
+      if (newVal <= 0) gameStore.toggleRoundState();
+    }
+  );
 
   // TODO think about let and const clearly, in terms calculating damage & applying additional effects
   const _executeAbility = (
@@ -60,12 +77,13 @@ export const useCombatStore = defineStore("combat", () => {
   };
 
   // Actions to update values
-  const updatePlayer = (playerValue: Character) => {
-    player.value = playerValue;
-  };
+  const updatePlayer = (playerValue: Character) => (player.value = playerValue);
 
-  const updateEnemy = (enemyValue: Character) => {
-    enemy.value = enemyValue;
+  const updateEnemy = (enemyValue: Character) => (enemy.value = enemyValue);
+
+  const resetCombat = () => {
+    player.value = initPlayer;
+    enemy.value = initEnemy;
   };
 
   return {
@@ -75,5 +93,6 @@ export const useCombatStore = defineStore("combat", () => {
     executeEnemyAbility,
     updatePlayer,
     updateEnemy,
+    resetCombat,
   };
 });

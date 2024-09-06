@@ -7,7 +7,7 @@ import {
 } from "~/types/game";
 
 export const useGameStore = defineStore("game", () => {
-  const gameState = ref<GameState>(GameState.MENU);
+  const gameState = ref<GameState>(GameState.ACTIVE);
   const roundState = ref<RoundState>(RoundState.ACTIVE);
   const turnState = ref<TurnState>(TurnState.PLAYER_TURN);
   const activeGame = ref<ActiveGame>({
@@ -15,17 +15,27 @@ export const useGameStore = defineStore("game", () => {
     turnNumber: 0,
   });
 
-  const updateGameState = (newState: GameState) => {
-    gameState.value = newState;
+  const _updateGameState = (newState: GameState) =>
+    (gameState.value = newState);
+
+  const loseGame = () => _updateGameState(GameState.DEFEAT);
+
+  const winGame = () => _updateGameState(GameState.VICTORY);
+
+  const activateGame = () => _updateGameState(GameState.ACTIVE);
+
+  const resetGame = () => {
+    _updateGameState(GameState.MENU);
+    roundState.value = RoundState.ACTIVE;
+    activeGame.value = {
+      roundNumber: 0,
+      turnNumber: 0,
+    };
   };
 
-  const increaseRoundNumber = () => {
-    activeGame.value.roundNumber++;
-  };
+  const increaseRoundNumber = () => activeGame.value.roundNumber++;
 
-  const increaseTurnNumber = () => {
-    activeGame.value.turnNumber++;
-  };
+  const increaseTurnNumber = () => activeGame.value.turnNumber++;
 
   const toggleRoundState = () => {
     roundState.value =
@@ -41,24 +51,18 @@ export const useGameStore = defineStore("game", () => {
         : TurnState.PLAYER_TURN;
   };
 
-  const resetGame = () => {
-    gameState.value = GameState.MENU;
-    activeGame.value = {
-      roundNumber: 0,
-      turnNumber: 0,
-    };
-  };
-
   return {
     gameState,
     roundState,
     turnState,
     activeGame,
-    updateGameState,
+    loseGame,
+    winGame,
+    activateGame,
+    resetGame,
     increaseRoundNumber,
     increaseTurnNumber,
     toggleRoundState,
     toggleTurnState,
-    resetGame,
   };
 });

@@ -1,8 +1,19 @@
 <template>
   <main>
-    <div class="container"><GameActive /></div>
+    <div class="container">
+      <GameActive v-if="gameStore.gameState === 'active'" />
+      <GameDefeat v-else-if="gameStore.gameState === 'defeat'" />
+      <GameVictory v-else-if="gameStore.gameState === 'victory'" />
+      <GameMenu v-else-if="gameStore.gameState === 'menu'" />
+    </div>
   </main>
 </template>
+
+<script setup>
+import { useGameStore } from "~/store/useGameStore";
+
+const gameStore = useGameStore();
+</script>
 
 <style lang="less" scoped>
 @max-width: 1024px;
