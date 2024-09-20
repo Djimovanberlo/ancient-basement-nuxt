@@ -1,10 +1,9 @@
 import { defineStore } from "pinia";
 import { abilitiesTable } from "~/lib/ability";
 import { initEnemy, initPlayer } from "~/lib/charater";
-import { calculateDamage } from "~/lib/combat";
+import { applyDamage, calculateDamage } from "~/lib/combat";
 import type { AbilityName } from "~/types/ability";
 import type { Character } from "~/types/character";
-import { useGameStore } from "./useGameStore";
 
 export const useCombatStore = defineStore("combat", () => {
   const player = ref<Character>(initPlayer);
@@ -23,8 +22,9 @@ export const useCombatStore = defineStore("combat", () => {
     // TEMP
     const ability = abilitiesTable[abilityName];
     const damage = calculateDamage(sourceCopy, targetCopy, ability);
+    const updatedStats = applyDamage(targetCopy.stats, damage);
 
-    targetCopy.stats.currentHealth -= damage;
+    targetCopy.stats = updatedStats;
 
     if (!ability.additionalEffect) {
       return { updatedSource: sourceCopy, updatedTarget: targetCopy };

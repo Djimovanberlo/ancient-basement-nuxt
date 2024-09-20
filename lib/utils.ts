@@ -17,3 +17,11 @@ const orderAbilitiesAlphabetically = (abilities: Ability[]): Ability[] => {
     return sortedNames.indexOf(a.name) - sortedNames.indexOf(b.name);
   });
 };
+
+export const preventBelowZero = (
+  currentValue: number,
+  delta: number
+): number => {
+  const result = currentValue + delta;
+  return result < 0 ? 0 : result;
+};

@@ -1,6 +1,8 @@
 <template>
   <div class="healthbar">
-    <div class="current-health"></div>
+    <div class="current-health">
+      <div>{{ currentHealth }} / {{ maxHealth }}</div>
+    </div>
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 import { AbilityName, type Ability } from "~/types/ability";
 import { ElementName } from "~/types/element";
+import { applyHealing } from "./combat";
 
 const createAbility = (abiltiy: Ability): Ability => {
   return {
@@ -24,18 +25,17 @@ export const fireball = createAbility({
   power: 10,
   damageType: "magical",
   element: ElementName.FIRE,
-  additionalEffect: (source, target) => {
-    source.stats.currentHealth -= 5;
-    return { updatedSource: source, updatedTarget: target };
-  },
 });
 
 export const heal = createAbility({
   name: AbilityName.Heal,
-  power: 10,
+  power: 0,
   damageType: "magical",
   additionalEffect: (source, target) => {
-    source.stats.currentHealth += 5;
+    const power = 15;
+    const updatedStats = applyHealing(source.stats, power);
+    source.stats = updatedStats;
+
     return { updatedSource: source, updatedTarget: target };
   },
 });

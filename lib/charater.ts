@@ -12,8 +12,7 @@ const createCharacter = (character: Character): Character => {
 export const initPlayer = createCharacter({
   name: "Player",
   stats: {
-    totalHealth: 100,
-    currentHealth: 80,
+    currentHealth: 50,
     maxHealth: 100,
     strength: 10,
     intelligence: 5,
@@ -27,7 +26,6 @@ export const initPlayer = createCharacter({
 export const initEnemy = createCharacter({
   name: "Enemy",
   stats: {
-    totalHealth: 100,
     currentHealth: 80,
     maxHealth: 100,
     strength: 10,
