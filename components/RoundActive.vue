@@ -8,7 +8,28 @@
   </div>
 </template>
 
-<script></script>
+<script setup lang="ts">
+import { useCombatStore } from "~/store/useCombatStore";
+import { useGameStore } from "~/store/useGameStore";
+
+const gameStore = useGameStore();
+const combatStore = useCombatStore();
+
+watch(
+  () => combatStore.player.stats.currentHealth,
+  (newVal) => {
+    if (newVal <= 0) gameStore.loseGame();
+  }
+);
+
+watch(
+  () => combatStore.enemy.stats.currentHealth,
+  (newVal) => {
+    console.log("PROC", newVal);
+    if (newVal <= 0) gameStore.toggleRoundState();
+  }
+);
+</script>
 
 <style lang="less" scoped>
 .round-active {

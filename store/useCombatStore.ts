@@ -7,24 +7,8 @@ import type { Character } from "~/types/character";
 import { useGameStore } from "./useGameStore";
 
 export const useCombatStore = defineStore("combat", () => {
-  const gameStore = useGameStore();
-
   const player = ref<Character>(initPlayer);
   const enemy = ref<Character>(initEnemy);
-
-  watch(
-    () => player.value.stats.currentHealth,
-    (newVal) => {
-      if (newVal <= 0) gameStore.loseGame();
-    }
-  );
-
-  watch(
-    () => enemy.value.stats.currentHealth,
-    (newVal) => {
-      if (newVal <= 0) gameStore.toggleRoundState();
-    }
-  );
 
   // TODO think about let and const clearly, in terms calculating damage & applying additional effects
   const _executeAbility = (

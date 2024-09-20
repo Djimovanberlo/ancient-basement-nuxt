@@ -15,7 +15,8 @@ export interface Ability {
 }
 
 export enum AbilityName {
-  Attack = "attack",
+  Attack = "attack", // default physical ability
+  Cast = "cast", // default magical ability
   Fireball = "fireball",
   Heal = "heal",
 }

@@ -28,8 +28,8 @@ export const useGameStore = defineStore("game", () => {
     _updateGameState(GameState.MENU);
     roundState.value = RoundState.ACTIVE;
     activeGame.value = {
-      roundNumber: 0,
-      turnNumber: 0,
+      roundNumber: 1,
+      turnNumber: 1,
     };
   };
 
