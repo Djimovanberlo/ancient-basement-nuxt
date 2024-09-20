@@ -1,11 +1,13 @@
 import { defineStore } from "pinia";
 import { abilitiesTable } from "~/lib/ability";
-import { initEnemy, initPlayer } from "~/lib/charater";
+import { initEnemy, initPlayer } from "~/lib/character";
 import { applyDamage, calculateDamage } from "~/lib/combat";
-import type { AbilityName } from "~/types/ability";
-import type { Character } from "~/types/character";
+import { DEFAULT_TIMEOUT } from "~/lib/constants";
+import { AbilityName } from "~/types/ability";
+import type { Character, CharacterType } from "~/types/character";
 
 export const useCombatStore = defineStore("combat", () => {
+  const userCanAct = ref<boolean>(true);
   const player = ref<Character>(initPlayer);
   const enemy = ref<Character>(initEnemy);
 
@@ -18,8 +20,6 @@ export const useCombatStore = defineStore("combat", () => {
     let sourceCopy = { ...source };
     let targetCopy = { ...target };
 
-    // Apply base damage / defense logic here
-    // TEMP
     const ability = abilitiesTable[abilityName];
     const damage = calculateDamage(sourceCopy, targetCopy, ability);
     const updatedStats = applyDamage(targetCopy.stats, damage);
@@ -39,8 +39,7 @@ export const useCombatStore = defineStore("combat", () => {
     return { updatedSource, updatedTarget };
   };
 
-  // Actions to execute abilities
-  const executePlayerAbility = (abilityName: AbilityName) => {
+  const _executePlayerAbility = (abilityName: AbilityName) => {
     const { updatedSource, updatedTarget } = _executeAbility(
       player.value,
       enemy.value,
@@ -50,7 +49,7 @@ export const useCombatStore = defineStore("combat", () => {
     enemy.value = updatedTarget;
   };
 
-  const executeEnemyAbility = (abilityName: AbilityName) => {
+  const _executeEnemyAbility = (abilityName: AbilityName) => {
     const { updatedSource, updatedTarget } = _executeAbility(
       enemy.value,
       player.value,
@@ -60,23 +59,45 @@ export const useCombatStore = defineStore("combat", () => {
     player.value = updatedTarget;
   };
 
-  // Actions to update values
-  const updatePlayer = (playerValue: Character) => (player.value = playerValue);
+  const _determineFirstTurn = (): CharacterType => {
+    const playerAgility = player.value.stats.agility;
+    const enemyAgility = enemy.value.stats.agility;
+
+    if (playerAgility > enemyAgility) {
+      // TODO some semi random logic
+      return "player";
+    }
+
+    return "enemy";
+  };
+
+  const executeTurn = (playerAbility: AbilityName) => {
+    const firstTurn = _determineFirstTurn();
+
+    userCanAct.value = false;
+
+    if (firstTurn === "player") {
+      _executePlayerAbility(playerAbility);
+      setTimeout(() => {
+        _executeEnemyAbility(AbilityName.Attack);
+        userCanAct.value = true;
+      }, DEFAULT_TIMEOUT);
+    } else {
+      _executeEnemyAbility(AbilityName.Attack);
+      setTimeout(() => {
+        _executePlayerAbility(playerAbility);
+        userCanAct.value = true;
+      }, DEFAULT_TIMEOUT);
+    }
+  };
 
   const updateEnemy = (enemyValue: Character) => (enemy.value = enemyValue);
-
-  const resetCombat = () => {
-    player.value = initPlayer;
-    enemy.value = initEnemy;
-  };
 
   return {
     player,
     enemy,
-    executePlayerAbility,
-    executeEnemyAbility,
-    updatePlayer,
     updateEnemy,
-    resetCombat,
+    executeTurn,
+    userCanAct,
   };
 });

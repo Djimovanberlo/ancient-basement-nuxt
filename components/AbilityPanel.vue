@@ -12,15 +12,14 @@
 
 <script setup lang="ts">
 import { useCombatStore } from "~/store/useCombatStore";
-import { useGameStore } from "~/store/useGameStore";
 import type { AbilityName } from "~/types/ability";
 
 const combatStore = useCombatStore();
-const gameStore = useGameStore();
 
 const handleAbility = (ability: AbilityName) => {
-  combatStore.executePlayerAbility(ability);
-  gameStore.finishPlayerTurn();
+  if (combatStore.userCanAct) {
+    combatStore.executeTurn(ability);
+  }
 };
 </script>
 

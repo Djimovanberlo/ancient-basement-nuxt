@@ -3,9 +3,10 @@
     <AbilityPanel />
     <Player />
     <Enemy />
-    <div>{{ gameStore.activeGame.roundNumber }}</div>
     <StatsPlayer />
     <StatsEnemy />
+    <div>R: {{ gameStore.activeGame.roundNumber }}</div>
+    <div>T: {{ gameStore.activeGame.turnNumber }}</div>
   </div>
 </template>
 
