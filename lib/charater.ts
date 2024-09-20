@@ -36,3 +36,17 @@ export const initEnemy = createCharacter({
   },
   abilities: [],
 });
+
+export const additionalEnemy = createCharacter({
+  name: "Additional Enemy",
+  stats: {
+    currentHealth: 150,
+    maxHealth: 200,
+    strength: 10,
+    intelligence: 5,
+    defense: 5,
+    resistance: 5,
+    agility: 5,
+  },
+  abilities: [],
+});

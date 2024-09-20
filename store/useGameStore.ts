@@ -5,14 +5,18 @@ import {
   TurnState,
   type ActiveGame,
 } from "~/types/game";
+import { useCombatStore } from "./useCombatStore";
+import { additionalEnemy } from "~/lib/charater";
 
 export const useGameStore = defineStore("game", () => {
+  const combatStore = useCombatStore();
+
   const gameState = ref<GameState>(GameState.ACTIVE);
   const roundState = ref<RoundState>(RoundState.ACTIVE);
   const turnState = ref<TurnState>(TurnState.PLAYER_TURN);
   const activeGame = ref<ActiveGame>({
-    roundNumber: 0,
-    turnNumber: 0,
+    roundNumber: 1,
+    turnNumber: 1,
   });
 
   const _updateGameState = (newState: GameState) =>
@@ -37,6 +41,7 @@ export const useGameStore = defineStore("game", () => {
     roundState.value = RoundState.ACTIVE;
     activeGame.value.turnNumber = 1;
     activeGame.value.roundNumber++;
+    combatStore.updateEnemy(additionalEnemy);
   };
 
   const winRound = () => {
@@ -45,11 +50,12 @@ export const useGameStore = defineStore("game", () => {
 
   const increaseTurnNumber = () => activeGame.value.turnNumber++;
 
-  const toggleTurnState = () => {
-    turnState.value =
-      turnState.value === TurnState.PLAYER_TURN
-        ? TurnState.ENEMY_TURN
-        : TurnState.PLAYER_TURN;
+  const finishPlayerTurn = () => {
+    turnState.value = TurnState.ENEMY_TURN;
+  };
+
+  const finishEnemyTurn = () => {
+    turnState.value = TurnState.PLAYER_TURN;
   };
 
   return {
@@ -64,6 +70,7 @@ export const useGameStore = defineStore("game", () => {
     startNewRound,
     increaseTurnNumber,
     winRound,
-    toggleTurnState,
+    finishPlayerTurn,
+    finishEnemyTurn,
   };
 });

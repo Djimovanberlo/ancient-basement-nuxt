@@ -3,23 +3,18 @@
     <AbilityPanel />
     <Player />
     <Enemy />
+    <div>{{ gameStore.activeGame.roundNumber }}</div>
     <StatsPlayer />
     <StatsEnemy />
   </div>
 </template>
 
 <script setup lang="ts">
-import { initEnemy } from "~/lib/charater";
 import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
 
 const gameStore = useGameStore();
 const combatStore = useCombatStore();
-
-// onMounted(() => {
-//   console.log("TRIGGER");
-//   combatStore.updateEnemy(initEnemy);
-// });
 
 watch(
   () => combatStore.player.stats.currentHealth,

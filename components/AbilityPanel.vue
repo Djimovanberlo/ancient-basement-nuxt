@@ -3,7 +3,7 @@
     <button
       v-for="ability in combatStore.player.abilities"
       :key="ability"
-      @click="combatStore.executePlayerAbility(ability)"
+      @click="handleAbility(ability)"
     >
       {{ ability }}
     </button>
@@ -12,8 +12,16 @@
 
 <script setup lang="ts">
 import { useCombatStore } from "~/store/useCombatStore";
+import { useGameStore } from "~/store/useGameStore";
+import type { AbilityName } from "~/types/ability";
 
 const combatStore = useCombatStore();
+const gameStore = useGameStore();
+
+const handleAbility = (ability: AbilityName) => {
+  combatStore.executePlayerAbility(ability);
+  gameStore.finishPlayerTurn();
+};
 </script>
 
 <style lang="less" scoped>
