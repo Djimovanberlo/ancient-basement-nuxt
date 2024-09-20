@@ -11,7 +11,7 @@ import { additionalEnemy } from "~/lib/character";
 export const useGameStore = defineStore("game", () => {
   const combatStore = useCombatStore();
 
-  const gameState = ref<GameState>(GameState.ACTIVE);
+  const gameState = ref<GameState>(GameState.MENU);
   const roundState = ref<RoundState>(RoundState.ACTIVE);
   const turnState = ref<TurnState>(TurnState.PLAYER_TURN);
   const activeGame = ref<ActiveGame>({
@@ -26,7 +26,7 @@ export const useGameStore = defineStore("game", () => {
 
   const winGame = () => _updateGameState(GameState.VICTORY);
 
-  const activateGame = () => _updateGameState(GameState.ACTIVE);
+  const startGame = () => _updateGameState(GameState.ACTIVE);
 
   const resetGame = () => {
     _updateGameState(GameState.MENU);
@@ -65,7 +65,7 @@ export const useGameStore = defineStore("game", () => {
     activeGame,
     loseGame,
     winGame,
-    activateGame,
+    startGame,
     resetGame,
     startNewRound,
     increaseTurnNumber,
