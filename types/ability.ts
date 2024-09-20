@@ -19,4 +19,6 @@ export enum AbilityName {
   Cast = "cast", // default magical ability
   Fireball = "fireball",
   Heal = "heal",
+  DrainLife = "drainLife",
+  EarthShock = "earthShock",
 }

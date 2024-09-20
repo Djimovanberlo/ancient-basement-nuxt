@@ -40,10 +40,42 @@ export const heal = createAbility({
   },
 });
 
+export const drainLife = createAbility({
+  name: AbilityName.DrainLife,
+  power: 5,
+  damageType: "magical",
+  additionalEffect: (source, target) => {
+    const power = 5;
+    const updatedStats = applyHealing(source.stats, power);
+    source.stats = updatedStats;
+
+    return { updatedSource: source, updatedTarget: target };
+  },
+});
+
+export const earthShock = createAbility({
+  name: AbilityName.EarthShock,
+  power: 10,
+  damageType: "magical",
+  element: ElementName.EARTH,
+});
+
 export const abilitiesTable: Record<AbilityName, Ability> = {
   attack: attack,
   cast: attack,
   fireball: fireball,
   heal: heal,
+  drainLife: drainLife,
+  earthShock: earthShock,
   // Add other abilities here as you define them
 };
+
+export const defaultAbilities = Object.values(abilitiesTable).filter(
+  (ability) =>
+    ability.name === AbilityName.Attack || ability.name === AbilityName.Cast
+);
+
+export const nonDefaultAbilities = Object.values(abilitiesTable).filter(
+  (ability) =>
+    ability.name !== AbilityName.Attack && ability.name !== AbilityName.Cast
+);

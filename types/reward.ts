@@ -6,6 +6,6 @@ export interface StatReward {
   value: number;
 }
 
-export type Reward = StatReward | AbilityName;
+export type Rewarddd = StatReward | AbilityName;
 
-export type RewardList = [Reward, Reward, Reward];
+export type RewardList = [Rewarddd, Rewarddd, Rewarddd];
