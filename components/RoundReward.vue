@@ -1,58 +1,47 @@
 <template>
   <div class="round-reward">
-    <div v-for="(item, index) in selectedComponents" :key="index">
+    <!-- <div v-for="(item, index) in selectedComponents" :key="index">
       <component :is="item.component" v-bind="item.props" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import RewardAbility from "./RewardAbility.vue";
-import RewardStat from "./RewardStat.vue";
-import { useCombatStore } from "~/store/useCombatStore";
 import { nonDefaultAbilities } from "~/lib/ability";
-import { Rewarddd } from "~/types/reward";
+import { useGameStore } from "~/store/useGameStore";
+import { StatName } from "~/types/stats";
+import { AbilityName } from "~/types/ability";
 
-const rewards = ref < Rewarddd > [];
+const gameStore = useGameStore();
 
-// TODO clean up and make work
-const combatStore = useCombatStore();
+const statRewardValue = gameStore.activeGame.roundNumber + 3; // TODO make this more dynamic
 
-const components = [markRaw(RewardAbility), markRaw(RewardStat)];
-const selectedComponents = ref([]);
+const generateUniqueRandomArray = (length) => {
+  const allElements = [
+    ...Object.values(StatName).map((stat) => ({
+      stat,
+      value: statRewardValue,
+    })),
+    ...Object.values(AbilityName),
+  ];
+  const uniqueArray = [];
 
-const filteredAbilities = nonDefaultAbilities.filter(
-  (ability) => !combatStore.player.abilities.includes(ability)
-);
+  for (let i = 0; i < length; i++) {
+    let randomIndex;
+    do {
+      randomIndex = Math.floor(Math.random() * allElements.length);
+    } while (uniqueArray.includes(allElements[randomIndex]));
 
-const selectRandomAbility = () => {
-  const availableAbilities = filteredAbilities.filter(
-    (ability) => !selectedAbilities.has(ability)
-  );
+    uniqueArray.push(allElements[randomIndex]);
+  }
 
-  if (availableAbilities.length === 0) return null; // Return null if no abilities are left
-
-  const randomIndex = Math.floor(Math.random() * availableAbilities.length);
-  return availableAbilities[randomIndex];
+  return uniqueArray;
 };
 
-const selectRandomComponent = () => {
-  const randomIndex = Math.floor(Math.random() * components.length);
-  return components[randomIndex];
-};
+// Generate the array of 3 unique random elements
+const randomRewards = generateUniqueRandomArray(3);
 
-for (let i = 0; i < 3; i++) {
-  const selectedRandomComponent = selectRandomComponent();
-
-  // Define props based on the selected component
-  const props =
-    selectedRandomComponent === RewardAbility
-      ? { ability: selectRandomAbility() }
-      : {};
-
-  selectedComponents.value.push({ component: selectedRandomComponent, props });
-}
+console.log("R", randomRewards); // Debug output
 </script>
 
 <style lang="less" scoped>
