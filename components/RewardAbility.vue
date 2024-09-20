@@ -1,16 +1,26 @@
 <template>
-  <div class="reward-ability">
+  <div @click="selectAbilityReward" class="reward-ability">
     {{ abilityReward }}
   </div>
 </template>
 
 <script setup lang="ts">
 import { createAbilityReward } from "~/lib/reward";
+import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
 
 const gameStore = useGameStore();
+const combatStore = useCombatStore();
 
 const abilityReward = createAbilityReward(gameStore.activeGame.roundNumber);
+
+const selectAbilityReward = () => {
+  const abilitiesCopy = [...combatStore.player.abilities];
+
+  combatStore.player.abilities = [...abilitiesCopy, abilityReward];
+
+  gameStore.startNewRound();
+};
 </script>
 
 <style>

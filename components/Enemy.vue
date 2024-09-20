@@ -1,17 +1,17 @@
 <template>
   <div class="enemy">
-    <label>STR: {{ enemy.stats.strength }}</label>
-    <label>INT: {{ enemy.stats.intelligence }}</label>
-    <label>DEF: {{ enemy.stats.defense }}</label>
-    <label>RES: {{ enemy.stats.resistance }}</label>
-    <label>AGI: {{ enemy.stats.agility }}</label>
+    <label>STR: {{ combatStore.enemy.stats.strength }}</label>
+    <label>INT: {{ combatStore.enemy.stats.intelligence }}</label>
+    <label>DEF: {{ combatStore.enemy.stats.defense }}</label>
+    <label>RES: {{ combatStore.enemy.stats.resistance }}</label>
+    <label>AGI: {{ combatStore.enemy.stats.agility }}</label>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useCombatStore } from "~/store/useCombatStore";
 
-const { enemy } = useCombatStore();
+const combatStore = useCombatStore();
 </script>
 
 <style lang="less" scoped>

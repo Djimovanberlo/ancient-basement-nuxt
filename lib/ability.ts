@@ -40,8 +40,9 @@ export const heal = createAbility({
   },
 });
 
-export const abilitiesTable: Record<string, Ability> = {
+export const abilitiesTable: Record<AbilityName, Ability> = {
   attack: attack,
+  cast: attack,
   fireball: fireball,
   heal: heal,
   // Add other abilities here as you define them

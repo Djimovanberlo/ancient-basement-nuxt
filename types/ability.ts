@@ -2,7 +2,7 @@ import type { Character } from "./character";
 import type { DamageType, ElementName } from "./element";
 
 export interface Ability {
-  name: string;
+  name: AbilityName;
   power: number;
   damageType: DamageType;
   element?: ElementName;

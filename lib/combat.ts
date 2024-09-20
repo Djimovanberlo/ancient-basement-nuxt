@@ -1,7 +1,7 @@
-// /lib/combat/combatUtils.ts
 // all chatGPT rough examples
 import type { Character } from "~/types/character";
 import type { Ability } from "~/types/ability";
+import type { StatName, Stats } from "~/types/stats";
 
 export const isPhysicalDamage = (ability: Ability): boolean => {
   return ability.damageType === "physical";
@@ -31,4 +31,15 @@ export const calculateDamage = (
   return baseDamage;
 };
 
-// Add more utility functions as needed
+export const getUpdatedCharacterStats = (
+  stats: Stats,
+  statsToUpdate: Partial<Stats>
+) => {
+  const statsCopy = { ...stats };
+
+  for (const [stat, value] of Object.entries(statsToUpdate)) {
+    statsCopy[stat as StatName] += value;
+  }
+
+  return statsCopy;
+};

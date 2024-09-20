@@ -14,13 +14,14 @@ import RewardStat from "./RewardStat.vue";
 const components = [markRaw(RewardAbility), markRaw(RewardStat)];
 const selectedComponents = ref([]);
 
-function selectRandomComponent() {
+const selectRandomComponent = () => {
   const randomIndex = Math.floor(Math.random() * components.length);
   return components[randomIndex];
-}
+};
 
 for (let i = 0; i < 3; i++) {
-  selectedComponents.value.push(selectRandomComponent());
+  const selectedRandomComponent = selectRandomComponent();
+  selectedComponents.value.push(selectedRandomComponent);
 }
 </script>
 

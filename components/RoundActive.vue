@@ -9,11 +9,17 @@
 </template>
 
 <script setup lang="ts">
+import { initEnemy } from "~/lib/charater";
 import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
 
 const gameStore = useGameStore();
 const combatStore = useCombatStore();
+
+// onMounted(() => {
+//   console.log("TRIGGER");
+//   combatStore.updateEnemy(initEnemy);
+// });
 
 watch(
   () => combatStore.player.stats.currentHealth,
@@ -25,8 +31,7 @@ watch(
 watch(
   () => combatStore.enemy.stats.currentHealth,
   (newVal) => {
-    console.log("PROC", newVal);
-    if (newVal <= 0) gameStore.toggleRoundState();
+    if (newVal <= 0) gameStore.winRound();
   }
 );
 </script>

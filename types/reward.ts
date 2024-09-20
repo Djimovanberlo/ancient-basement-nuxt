@@ -2,7 +2,7 @@ import type { AbilityName } from "./ability";
 import type { StatName } from "./stats";
 
 export interface StatReward {
-  stat: StatName;
+  statName: StatName;
   value: number;
 }
 

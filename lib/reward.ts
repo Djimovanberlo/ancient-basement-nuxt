@@ -22,7 +22,7 @@ export const createStatReward = (roundNumber: number): StatReward => {
   const value = getRewardValue(roundNumber, randomStat);
 
   return {
-    stat: randomStat,
+    statName: randomStat,
     value,
   };
 };

@@ -33,16 +33,17 @@ export const useGameStore = defineStore("game", () => {
     };
   };
 
-  const increaseRoundNumber = () => activeGame.value.roundNumber++;
+  const startNewRound = () => {
+    roundState.value = RoundState.ACTIVE;
+    activeGame.value.turnNumber = 1;
+    activeGame.value.roundNumber++;
+  };
+
+  const winRound = () => {
+    roundState.value = RoundState.REWARD;
+  };
 
   const increaseTurnNumber = () => activeGame.value.turnNumber++;
-
-  const toggleRoundState = () => {
-    roundState.value =
-      roundState.value === RoundState.REWARD
-        ? RoundState.ACTIVE
-        : RoundState.REWARD;
-  };
 
   const toggleTurnState = () => {
     turnState.value =
@@ -60,9 +61,9 @@ export const useGameStore = defineStore("game", () => {
     winGame,
     activateGame,
     resetGame,
-    increaseRoundNumber,
+    startNewRound,
     increaseTurnNumber,
-    toggleRoundState,
+    winRound,
     toggleTurnState,
   };
 });
