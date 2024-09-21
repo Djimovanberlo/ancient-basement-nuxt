@@ -7,7 +7,7 @@ import { AbilityName } from "~/types/ability";
 import type { Character, CharacterType } from "~/types/character";
 
 export const useCombatStore = defineStore("combat", () => {
-  const userCanAct = ref<boolean>(true);
+  const playerCanAct = ref<boolean>(true);
   const player = ref<Character>(initPlayer);
   const enemy = ref<Character>(initEnemy);
 
@@ -74,19 +74,19 @@ export const useCombatStore = defineStore("combat", () => {
   const executeTurn = (playerAbility: AbilityName) => {
     const firstTurn = _determineFirstTurn();
 
-    userCanAct.value = false;
+    playerCanAct.value = false;
 
     if (firstTurn === "player") {
       _executePlayerAbility(playerAbility);
       setTimeout(() => {
         _executeEnemyAbility(AbilityName.Attack);
-        userCanAct.value = true;
+        playerCanAct.value = true;
       }, DEFAULT_TIMEOUT);
     } else {
       _executeEnemyAbility(AbilityName.Attack);
       setTimeout(() => {
         _executePlayerAbility(playerAbility);
-        userCanAct.value = true;
+        playerCanAct.value = true;
       }, DEFAULT_TIMEOUT);
     }
   };
@@ -98,6 +98,6 @@ export const useCombatStore = defineStore("combat", () => {
     enemy,
     updateEnemy,
     executeTurn,
-    userCanAct,
+    playerCanAct,
   };
 });

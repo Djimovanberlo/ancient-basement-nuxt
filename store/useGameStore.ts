@@ -50,14 +50,6 @@ export const useGameStore = defineStore("game", () => {
 
   const increaseTurnNumber = () => activeGame.value.turnNumber++;
 
-  // const finishPlayerTurn = () => {
-  //   turnState.value = TurnState.ENEMY_TURN;
-  // };
-
-  // const finishEnemyTurn = () => {
-  //   turnState.value = TurnState.PLAYER_TURN;
-  // };
-
   return {
     gameState,
     roundState,

@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { abilityMap } from "~/lib/ability";
 import { orderArrayAlphabetically } from "~/lib/utils";
 import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
@@ -34,8 +33,8 @@ const selectAbilityReward = () => {
   ) as AbilityName[];
 
   const orderedAbilities = [...baseAbilities, ...otherAbilities];
-
   combatStore.player.abilities = orderedAbilities;
+
   gameStore.startNewRound();
 };
 </script>

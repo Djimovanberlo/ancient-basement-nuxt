@@ -27,9 +27,7 @@ onMounted(() => {
   const statRewards: StatReward[] = [];
   const numOfRewards = 3;
 
-  let numOfLoops = numOfRewards;
-
-  for (let i = 0; i < numOfLoops; i++) {
+  while (abilityRewards.length + statRewards.length < numOfRewards) {
     const randomType = floorRandom(2);
 
     if (randomType === 0) {
@@ -40,11 +38,10 @@ onMounted(() => {
 
       const possibleAbilties = Object.values(AbilityName).filter(
         (ability) => !impossibleAbilties.includes(ability)
-      ); // TODO make this more dynamic
+      );
 
       if (possibleAbilties.length === 0) {
-        numOfLoops++;
-        break;
+        continue;
       }
 
       const randomAbility =
@@ -62,7 +59,6 @@ onMounted(() => {
       );
 
       const randomStat = possibleStats[floorRandom(possibleStats.length)];
-
       statRewards.push({
         type: "stat",
         statName: randomStat,

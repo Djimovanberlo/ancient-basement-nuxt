@@ -17,7 +17,7 @@ import type { AbilityName } from "~/types/ability";
 const combatStore = useCombatStore();
 
 const handleAbility = (ability: AbilityName) => {
-  if (combatStore.userCanAct) {
+  if (combatStore.playerCanAct) {
     combatStore.executeTurn(ability);
   }
 };

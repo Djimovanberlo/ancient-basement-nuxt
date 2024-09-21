@@ -1,5 +1,3 @@
-import type { Ability } from "~/types/ability";
-
 export const orderArrayAlphabetically = (arr: string[]) => {
   return arr.sort((a, b) => {
     const lowerA = a.toLowerCase();
@@ -7,16 +5,6 @@ export const orderArrayAlphabetically = (arr: string[]) => {
     if (lowerA < lowerB) return -1;
     if (lowerA > lowerB) return 1;
     return 0;
-  });
-};
-
-export const orderAbilitiesAlphabetically = (
-  abilities: Ability[]
-): Ability[] => {
-  const sortedNames = orderArrayAlphabetically(abilities.map((a) => a.name));
-
-  return abilities.sort((a, b) => {
-    return sortedNames.indexOf(a.name) - sortedNames.indexOf(b.name);
   });
 };
 

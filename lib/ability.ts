@@ -69,7 +69,3 @@ export const abilitiesTable: Record<AbilityName, Ability> = {
   earthShock: earthShock,
   // Add other abilities here as you define them
 };
-
-export const abilityMap = Object.fromEntries(
-  Object.entries(AbilityName).map(([_, value]) => [value, value])
-);
