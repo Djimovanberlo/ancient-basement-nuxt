@@ -2,7 +2,7 @@ import type { Character } from "./character";
 import type { DamageType, ElementName } from "./element";
 
 export interface Ability {
-  name: string;
+  name: AbilityName;
   power: number;
   damageType: DamageType;
   element?: ElementName;
@@ -15,7 +15,10 @@ export interface Ability {
 }
 
 export enum AbilityName {
-  Attack = "attack",
+  Attack = "attack", // default physical ability
+  Cast = "cast", // default magical ability
   Fireball = "fireball",
   Heal = "heal",
+  DrainLife = "drainLife",
+  EarthShock = "earthShock",
 }

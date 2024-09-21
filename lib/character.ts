@@ -20,7 +20,12 @@ export const initPlayer = createCharacter({
     resistance: 5,
     agility: 5,
   },
-  abilities: [AbilityName.Fireball, AbilityName.Heal],
+  abilities: [
+    AbilityName.Fireball,
+    AbilityName.Heal,
+    AbilityName.Attack,
+    AbilityName.Cast,
+  ],
 });
 
 export const initEnemy = createCharacter({
@@ -28,11 +33,25 @@ export const initEnemy = createCharacter({
   stats: {
     currentHealth: 80,
     maxHealth: 100,
+    strength: 2,
+    intelligence: 5,
+    defense: 5,
+    resistance: 5,
+    agility: 2,
+  },
+  abilities: [],
+});
+
+export const additionalEnemy = createCharacter({
+  name: "Additional Enemy",
+  stats: {
+    currentHealth: 150,
+    maxHealth: 200,
     strength: 10,
     intelligence: 5,
     defense: 5,
     resistance: 5,
-    agility: 5,
+    agility: 7,
   },
   abilities: [],
 });

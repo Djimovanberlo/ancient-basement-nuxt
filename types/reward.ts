@@ -1,15 +1,15 @@
 import type { AbilityName } from "./ability";
+import type { StatName } from "./stats";
 
-// STR, INT, AGI, maxHealth
-// Picking maxHeath reward also heals the character's currentHealth
-export type StatReward =
-  | { maxHealth: number }
-  | { strength: number }
-  | { intelligence: number }
-  | { defense: number }
-  | { resistance: number }
-  | { agility: number };
+export interface StatReward {
+  type: "stat";
+  statName: StatName;
+  value: number;
+}
 
-export type Reward = StatReward | AbilityName;
+export interface AbilityReward {
+  type: "ability";
+  abilityName: AbilityName;
+}
 
-export type RewardList = [Reward, Reward, Reward];
+export type Reward = StatReward | AbilityReward;

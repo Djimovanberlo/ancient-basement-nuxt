@@ -5,14 +5,18 @@ import {
   TurnState,
   type ActiveGame,
 } from "~/types/game";
+import { useCombatStore } from "./useCombatStore";
+import { additionalEnemy } from "~/lib/character";
 
 export const useGameStore = defineStore("game", () => {
-  const gameState = ref<GameState>(GameState.ACTIVE);
+  const combatStore = useCombatStore();
+
+  const gameState = ref<GameState>(GameState.MENU);
   const roundState = ref<RoundState>(RoundState.ACTIVE);
   const turnState = ref<TurnState>(TurnState.PLAYER_TURN);
   const activeGame = ref<ActiveGame>({
-    roundNumber: 0,
-    turnNumber: 0,
+    roundNumber: 1,
+    turnNumber: 1,
   });
 
   const _updateGameState = (newState: GameState) =>
@@ -22,34 +26,29 @@ export const useGameStore = defineStore("game", () => {
 
   const winGame = () => _updateGameState(GameState.VICTORY);
 
-  const activateGame = () => _updateGameState(GameState.ACTIVE);
+  const startGame = () => _updateGameState(GameState.ACTIVE);
 
   const resetGame = () => {
     _updateGameState(GameState.MENU);
     roundState.value = RoundState.ACTIVE;
     activeGame.value = {
-      roundNumber: 0,
-      turnNumber: 0,
+      roundNumber: 1,
+      turnNumber: 1,
     };
   };
 
-  const increaseRoundNumber = () => activeGame.value.roundNumber++;
+  const startNewRound = () => {
+    roundState.value = RoundState.ACTIVE;
+    activeGame.value.turnNumber = 1;
+    activeGame.value.roundNumber++;
+    combatStore.updateEnemy(additionalEnemy);
+  };
+
+  const winRound = () => {
+    roundState.value = RoundState.REWARD;
+  };
 
   const increaseTurnNumber = () => activeGame.value.turnNumber++;
-
-  const toggleRoundState = () => {
-    roundState.value =
-      roundState.value === RoundState.REWARD
-        ? RoundState.ACTIVE
-        : RoundState.REWARD;
-  };
-
-  const toggleTurnState = () => {
-    turnState.value =
-      turnState.value === TurnState.PLAYER_TURN
-        ? TurnState.ENEMY_TURN
-        : TurnState.PLAYER_TURN;
-  };
 
   return {
     gameState,
@@ -58,11 +57,12 @@ export const useGameStore = defineStore("game", () => {
     activeGame,
     loseGame,
     winGame,
-    activateGame,
+    startGame,
     resetGame,
-    increaseRoundNumber,
+    startNewRound,
     increaseTurnNumber,
-    toggleRoundState,
-    toggleTurnState,
+    winRound,
+    // finishPlayerTurn,
+    // finishEnemyTurn,
   };
 });

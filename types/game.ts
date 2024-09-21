@@ -16,6 +16,6 @@ export enum TurnState {
 }
 
 export interface ActiveGame {
-  roundNumber: number;
-  turnNumber: number;
+  roundNumber: number; // represents the current round, meaning the number of times the player has defeated an enemy
+  turnNumber: number; // represents the current turn, meaning the amount of turns within a round
 }

@@ -9,7 +9,7 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useGameStore } from "~/store/useGameStore";
 
 const gameStore = useGameStore();

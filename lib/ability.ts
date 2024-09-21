@@ -1,5 +1,6 @@
 import { AbilityName, type Ability } from "~/types/ability";
 import { ElementName } from "~/types/element";
+import { applyHealing } from "./combat";
 
 const createAbility = (abiltiy: Ability): Ability => {
   return {
@@ -21,28 +22,50 @@ export const attack = createAbility({
 
 export const fireball = createAbility({
   name: AbilityName.Fireball,
-  power: 10,
+  power: 100,
   damageType: "magical",
   element: ElementName.FIRE,
-  additionalEffect: (source, target) => {
-    source.stats.currentHealth -= 5;
-    return { updatedSource: source, updatedTarget: target };
-  },
 });
 
 export const heal = createAbility({
   name: AbilityName.Heal,
-  power: 10,
+  power: 0,
   damageType: "magical",
   additionalEffect: (source, target) => {
-    source.stats.currentHealth += 5;
+    const power = 15;
+    const updatedStats = applyHealing(source.stats, power);
+    source.stats = updatedStats;
+
     return { updatedSource: source, updatedTarget: target };
   },
 });
 
-export const abilitiesTable: Record<string, Ability> = {
+export const drainLife = createAbility({
+  name: AbilityName.DrainLife,
+  power: 5,
+  damageType: "magical",
+  additionalEffect: (source, target) => {
+    const power = 5;
+    const updatedStats = applyHealing(source.stats, power);
+    source.stats = updatedStats;
+
+    return { updatedSource: source, updatedTarget: target };
+  },
+});
+
+export const earthShock = createAbility({
+  name: AbilityName.EarthShock,
+  power: 10,
+  damageType: "magical",
+  element: ElementName.EARTH,
+});
+
+export const abilitiesTable: Record<AbilityName, Ability> = {
   attack: attack,
+  cast: attack,
   fireball: fireball,
   heal: heal,
+  drainLife: drainLife,
+  earthShock: earthShock,
   // Add other abilities here as you define them
 };
