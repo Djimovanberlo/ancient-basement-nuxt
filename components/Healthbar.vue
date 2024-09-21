@@ -7,12 +7,12 @@
 </template>
 
 <script setup lang="ts">
-interface HealthbarProps {
+interface Props {
   currentHealth: number;
   maxHealth: number;
 }
 
-defineProps<HealthbarProps>();
+defineProps<Props>();
 </script>
 
 <style lang="less" scoped>

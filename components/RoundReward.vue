@@ -1,8 +1,9 @@
 <template>
   <div class="round-reward">
-    <div v-for="(reward, index) in rewards" :key="index">
-      {{ reward }}
-    </div>
+    <template v-for="(reward, index) in rewards" :key="index">
+      <RewardStat v-if="reward.type === 'stat'" :reward="reward" />
+      <RewardAbility v-else :reward="reward" />
+    </template>
   </div>
 </template>
 
@@ -10,43 +11,51 @@
 import { useGameStore } from "~/store/useGameStore";
 import { StatName } from "~/types/stats";
 import { AbilityName } from "~/types/ability";
-import type { StatReward } from "~/types/reward";
+import type { AbilityReward, StatReward } from "~/types/reward";
 import { useCombatStore } from "~/store/useCombatStore";
 import { floorRandom, shuffleArray } from "~/lib/utils";
+import RewardStat from "./RewardStat.vue";
+import RewardAbility from "./RewardAbility.vue";
 
 const gameStore = useGameStore();
 const combatStore = useCombatStore();
-
-const statRewardValue = gameStore.activeGame.roundNumber + 3;
-const numOfRewards = 3;
-
-const abilityRewards = ref<AbilityName[]>([]);
-const statRewards = ref<StatReward[]>([]);
-
-const rewards = computed(() => {
-  return shuffleArray([...abilityRewards.value, ...statRewards.value]);
-});
+const rewards = ref<(AbilityReward | StatReward)[]>([]);
 
 onMounted(() => {
-  for (let i = 0; i < numOfRewards; i++) {
-    const randomIndex = floorRandom(2);
+  const statRewardValue = gameStore.activeGame.roundNumber + 3; // TODO make this more dynamic
+  const abilityRewards: AbilityReward[] = [];
+  const statRewards: StatReward[] = [];
+  const numOfRewards = 3;
 
-    if (randomIndex === 0) {
+  let numOfLoops = numOfRewards;
+
+  for (let i = 0; i < numOfLoops; i++) {
+    const randomType = floorRandom(2);
+
+    if (randomType === 0) {
       const impossibleAbilties = [
         ...combatStore.player.abilities,
-        ...abilityRewards.value,
+        ...abilityRewards,
       ];
 
       const possibleAbilties = Object.values(AbilityName).filter(
         (ability) => !impossibleAbilties.includes(ability)
       ); // TODO make this more dynamic
 
+      if (possibleAbilties.length === 0) {
+        numOfLoops++;
+        break;
+      }
+
       const randomAbility =
         possibleAbilties[floorRandom(possibleAbilties.length)];
 
-      abilityRewards.value.push(randomAbility);
+      abilityRewards.push({
+        type: "ability",
+        abilityName: randomAbility,
+      });
     } else {
-      const impossibleStats = statRewards.value.map((stat) => stat.statName);
+      const impossibleStats = statRewards.map((stat) => stat.statName);
 
       const possibleStats = Object.values(StatName).filter(
         (stat) => !impossibleStats.includes(stat)
@@ -54,12 +63,15 @@ onMounted(() => {
 
       const randomStat = possibleStats[floorRandom(possibleStats.length)];
 
-      statRewards.value.push({
+      statRewards.push({
+        type: "stat",
         statName: randomStat,
         value: statRewardValue,
       });
     }
   }
+
+  rewards.value = shuffleArray([...abilityRewards, ...statRewards]);
 });
 </script>
 

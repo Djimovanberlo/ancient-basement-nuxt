@@ -1,17 +1,17 @@
 <template>
   <div @click="selectAbilityReward" class="reward-ability">
-    {{ ability.name }}
+    {{ reward.abilityName }}
   </div>
 </template>
 
 <script setup lang="ts">
-import { createAbilityReward } from "~/lib/reward";
 import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
 import type { Ability } from "~/types/ability";
+import type { AbilityReward } from "~/types/reward";
 
 interface Props {
-  ability: Ability;
+  reward: AbilityReward;
 }
 
 defineProps<Props>();
