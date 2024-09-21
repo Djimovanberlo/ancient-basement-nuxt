@@ -35,7 +35,7 @@ onMounted(() => {
     if (randomType === 0) {
       const impossibleAbilties = [
         ...combatStore.player.abilities,
-        ...abilityRewards,
+        ...abilityRewards.map((ability) => ability.abilityName),
       ];
 
       const possibleAbilties = Object.values(AbilityName).filter(

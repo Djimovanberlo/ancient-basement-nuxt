@@ -35,8 +35,8 @@ export const calculateDamage = (
 };
 
 const getUpdatedHealth = (
-  currentHealth: number,
   maxHealth: number,
+  currentHealth: number,
   value: number
 ) => {
   const updatedHealth = currentHealth + value;
@@ -56,13 +56,13 @@ export const getUpdatedCharacterStats = (
 ) => {
   const statsCopy = { ...stats };
 
-  for (const [stat, value] of Object.entries(statsToUpdate)) {
-    const statKey = stat as StatName;
+  for (const [key, value] of Object.entries(statsToUpdate)) {
+    const statKey = key as StatName;
 
     if (statKey === StatName.CURRENT_HEALTH) {
       const maxHealth = statsCopy[StatName.MAX_HEALTH];
       const currentHealth = statsCopy[StatName.CURRENT_HEALTH];
-      const updatedHealth = getUpdatedHealth(currentHealth, maxHealth, value);
+      const updatedHealth = getUpdatedHealth(maxHealth, currentHealth, value);
       statsCopy[StatName.CURRENT_HEALTH] = updatedHealth;
     } else {
       const updatedStat = preventBelowZero(statsCopy[statKey], value);

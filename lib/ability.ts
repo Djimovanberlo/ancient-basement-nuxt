@@ -70,12 +70,6 @@ export const abilitiesTable: Record<AbilityName, Ability> = {
   // Add other abilities here as you define them
 };
 
-export const defaultAbilities = Object.values(abilitiesTable).filter(
-  (ability) =>
-    ability.name === AbilityName.Attack || ability.name === AbilityName.Cast
-);
-
-export const nonDefaultAbilities = Object.values(abilitiesTable).filter(
-  (ability) =>
-    ability.name !== AbilityName.Attack && ability.name !== AbilityName.Cast
+export const abilityMap = Object.fromEntries(
+  Object.entries(AbilityName).map(([_, value]) => [value, value])
 );

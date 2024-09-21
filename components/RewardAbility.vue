@@ -5,26 +5,38 @@
 </template>
 
 <script setup lang="ts">
+import { abilityMap } from "~/lib/ability";
+import { orderArrayAlphabetically } from "~/lib/utils";
 import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
-import type { Ability } from "~/types/ability";
+import { AbilityName } from "~/types/ability";
 import type { AbilityReward } from "~/types/reward";
 
 interface Props {
   reward: AbilityReward;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-// const gameStore = useGameStore();
-// const combatStore = useCombatStore();
-
-// const abilityReward = createAbilityReward(gameStore.activeGame.roundNumber);
+const gameStore = useGameStore();
+const combatStore = useCombatStore();
 
 const selectAbilityReward = () => {
-  // const abilitiesCopy = [...combatStore.player.abilities];
-  // combatStore.player.abilities = [...abilitiesCopy, abilityReward];
-  // gameStore.startNewRound();
+  const playerAbilties = [...combatStore.player.abilities];
+  const allAbilities = [...playerAbilties, props.reward.abilityName];
+
+  const baseAbilities = allAbilities.filter(
+    (ability) => ability === AbilityName.Attack || ability === AbilityName.Cast
+  ) as AbilityName[];
+
+  const otherAbilities = orderArrayAlphabetically(
+    allAbilities.filter((abiltiy) => !baseAbilities.includes(abiltiy))
+  ) as AbilityName[];
+
+  const orderedAbilities = [...baseAbilities, ...otherAbilities];
+
+  combatStore.player.abilities = orderedAbilities;
+  gameStore.startNewRound();
 };
 </script>
 
