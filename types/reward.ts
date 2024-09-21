@@ -7,5 +7,3 @@ export interface StatReward {
 }
 
 export type Reward = StatReward | AbilityName;
-
-export type RewardList = [Reward, Reward, Reward];

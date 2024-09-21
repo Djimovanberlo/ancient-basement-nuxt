@@ -22,7 +22,7 @@ export const attack = createAbility({
 
 export const fireball = createAbility({
   name: AbilityName.Fireball,
-  power: 10,
+  power: 100,
   damageType: "magical",
   element: ElementName.FIRE,
 });

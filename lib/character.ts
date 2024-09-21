@@ -20,7 +20,12 @@ export const initPlayer = createCharacter({
     resistance: 5,
     agility: 5,
   },
-  abilities: [AbilityName.Fireball, AbilityName.Heal],
+  abilities: [
+    AbilityName.Fireball,
+    AbilityName.Heal,
+    AbilityName.Attack,
+    AbilityName.Cast,
+  ],
 });
 
 export const initEnemy = createCharacter({

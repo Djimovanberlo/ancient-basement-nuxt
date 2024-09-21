@@ -1,47 +1,66 @@
 <template>
   <div class="round-reward">
-    <!-- <div v-for="(item, index) in selectedComponents" :key="index">
-      <component :is="item.component" v-bind="item.props" />
-    </div> -->
+    <div v-for="(reward, index) in rewards" :key="index">
+      {{ reward }}
+    </div>
   </div>
 </template>
 
-<script setup>
-import { nonDefaultAbilities } from "~/lib/ability";
+<script setup lang="ts">
 import { useGameStore } from "~/store/useGameStore";
 import { StatName } from "~/types/stats";
 import { AbilityName } from "~/types/ability";
+import type { StatReward } from "~/types/reward";
+import { useCombatStore } from "~/store/useCombatStore";
+import { floorRandom, shuffleArray } from "~/lib/utils";
 
 const gameStore = useGameStore();
+const combatStore = useCombatStore();
 
-const statRewardValue = gameStore.activeGame.roundNumber + 3; // TODO make this more dynamic
+const statRewardValue = gameStore.activeGame.roundNumber + 3;
+const numOfRewards = 3;
 
-const generateUniqueRandomArray = (length) => {
-  const allElements = [
-    ...Object.values(StatName).map((stat) => ({
-      stat,
-      value: statRewardValue,
-    })),
-    ...Object.values(AbilityName),
-  ];
-  const uniqueArray = [];
+const abilityRewards = ref<AbilityName[]>([]);
+const statRewards = ref<StatReward[]>([]);
 
-  for (let i = 0; i < length; i++) {
-    let randomIndex;
-    do {
-      randomIndex = Math.floor(Math.random() * allElements.length);
-    } while (uniqueArray.includes(allElements[randomIndex]));
+const rewards = computed(() => {
+  return shuffleArray([...abilityRewards.value, ...statRewards.value]);
+});
 
-    uniqueArray.push(allElements[randomIndex]);
+onMounted(() => {
+  for (let i = 0; i < numOfRewards; i++) {
+    const randomIndex = floorRandom(2);
+
+    if (randomIndex === 0) {
+      const impossibleAbilties = [
+        ...combatStore.player.abilities,
+        ...abilityRewards.value,
+      ];
+
+      const possibleAbilties = Object.values(AbilityName).filter(
+        (ability) => !impossibleAbilties.includes(ability)
+      ); // TODO make this more dynamic
+
+      const randomAbility =
+        possibleAbilties[floorRandom(possibleAbilties.length)];
+
+      abilityRewards.value.push(randomAbility);
+    } else {
+      const impossibleStats = statRewards.value.map((stat) => stat.statName);
+
+      const possibleStats = Object.values(StatName).filter(
+        (stat) => !impossibleStats.includes(stat)
+      );
+
+      const randomStat = possibleStats[floorRandom(possibleStats.length)];
+
+      statRewards.value.push({
+        statName: randomStat,
+        value: statRewardValue,
+      });
+    }
   }
-
-  return uniqueArray;
-};
-
-// Generate the array of 3 unique random elements
-const randomRewards = generateUniqueRandomArray(3);
-
-console.log("R", randomRewards); // Debug output
+});
 </script>
 
 <style lang="less" scoped>
