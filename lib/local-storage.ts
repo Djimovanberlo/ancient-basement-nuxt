@@ -32,10 +32,13 @@ export const getRewards = async (): Promise<Reward[] | null> => {
     return null;
   }
 
+  console.log("Rewards loaded from local storage", rewards);
+
   return rewards;
 };
 
 export const storeRewards = async (rewards: Reward[]) => {
+  console.log("Storing rewards in local storage", rewards);
   const rewardsString = JSON.stringify(rewards);
   const hash = await hashRewards(rewards);
   localStorage.setItem(REWARDS_KEY, rewardsString);

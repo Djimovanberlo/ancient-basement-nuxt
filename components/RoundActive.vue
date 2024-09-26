@@ -8,14 +8,22 @@
     <div>R: {{ gameStore.activeGame.roundNumber }}</div>
     <div>T: {{ gameStore.activeGame.turnNumber }}</div>
   </div>
+  <button @click="saveRewards">SAVE</button>
+  <button @click="getRewards">GET</button>
 </template>
 
 <script setup lang="ts">
+import { storeRewards, getRewards } from "~/lib/local-storage";
 import { useCombatStore } from "~/store/useCombatStore";
 import { useGameStore } from "~/store/useGameStore";
 
 const gameStore = useGameStore();
 const combatStore = useCombatStore();
+
+const saveRewards = async () => {
+  if (!combatStore.player.epicRewards) return;
+  await storeRewards(combatStore.player.epicRewards);
+};
 
 watch(
   () => combatStore.player.stats.currentHealth,

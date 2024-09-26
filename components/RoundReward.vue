@@ -28,9 +28,10 @@ onMounted(() => {
   const numOfRewards = 3;
 
   while (abilityRewards.length + statRewards.length < numOfRewards) {
-    const randomType = floorRandom(2);
+    const isAbility = floorRandom(2) === 0; // 50% chance
+    const isEpic = floorRandom(2) === 0; // 50% chance
 
-    if (randomType === 0) {
+    if (isAbility) {
       const impossibleAbilties = [
         ...combatStore.player.abilities,
         ...abilityRewards.map((ability) => ability.abilityName),
@@ -50,6 +51,7 @@ onMounted(() => {
       abilityRewards.push({
         type: "ability",
         abilityName: randomAbility,
+        isEpic,
       });
     } else {
       const impossibleStats = statRewards.map((stat) => stat.statName);
@@ -63,6 +65,7 @@ onMounted(() => {
         type: "stat",
         statName: randomStat,
         value: statRewardValue,
+        isEpic,
       });
     }
   }
