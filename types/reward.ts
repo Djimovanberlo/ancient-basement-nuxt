@@ -11,7 +11,7 @@ export interface StatReward {
 export interface AbilityReward {
   type: "ability";
   abilityName: AbilityName;
-  isEpic?: boolean;
+  isEpic: boolean;
 }
 
 export type Reward = StatReward | AbilityReward;
