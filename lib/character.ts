@@ -6,6 +6,7 @@ const createCharacter = (character: Character): Character => {
     name: character.name,
     stats: character.stats,
     abilities: character.abilities,
+    epicRewards: character.epicRewards,
   };
 };
 
@@ -26,6 +27,7 @@ export const initPlayer = createCharacter({
     AbilityName.Attack,
     AbilityName.Cast,
   ],
+  epicRewards: [],
 });
 
 export const initEnemy = createCharacter({

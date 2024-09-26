@@ -21,6 +21,10 @@ const gameStore = useGameStore();
 const combatStore = useCombatStore();
 
 const selectStatReward = () => {
+  if (props.reward.isEpic) {
+    combatStore.player.epicRewards?.push(props.reward);
+  }
+
   const updatedStats = getUpdatedCharacterStats(combatStore.player.stats, {
     [props.reward.statName]: props.reward.value,
   });

@@ -21,15 +21,19 @@ const gameStore = useGameStore();
 const combatStore = useCombatStore();
 
 const selectAbilityReward = () => {
-  const playerAbilties = [...combatStore.player.abilities];
-  const allAbilities = [...playerAbilties, props.reward.abilityName];
+  if (props.reward.isEpic) {
+    combatStore.player.epicRewards?.push(props.reward);
+  }
 
-  const baseAbilities = allAbilities.filter(
+  const playerAbilties = [...combatStore.player.abilities];
+  const allPlayerAbilities = [...playerAbilties, props.reward.abilityName];
+
+  const baseAbilities = allPlayerAbilities.filter(
     (ability) => ability === AbilityName.Attack || ability === AbilityName.Cast
   ) as AbilityName[];
 
   const otherAbilities = orderArrayAlphabetically(
-    allAbilities.filter((abiltiy) => !baseAbilities.includes(abiltiy))
+    allPlayerAbilities.filter((abiltiy) => !baseAbilities.includes(abiltiy))
   ) as AbilityName[];
 
   const orderedAbilities = [...baseAbilities, ...otherAbilities];
