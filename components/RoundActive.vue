@@ -3,8 +3,11 @@
     <AbilityPanel />
     <Player />
     <Enemy />
-    <StatsPlayer />
-    <StatsEnemy />
+    <Tooltip />
+    <Stats class="stats-player" :character="combatStore.player" />
+    <Status class="status-player" />
+    <Stats class="stats-enemy" :character="combatStore.enemy" />
+    <Status class="status-enemy" />
     <div>R: {{ gameStore.activeGame.roundNumber }}</div>
     <div>T: {{ gameStore.activeGame.turnNumber }}</div>
   </div>
@@ -53,10 +56,25 @@ watch(
     grid-row: 10 / 13;
   }
 
+  .tooltip {
+    grid-column: 6 / 8;
+    grid-row: 10 / 13;
+  }
+
   .player {
     grid-column: 1 / 6;
     grid-row: 6 / 13;
     border: 3px solid black;
+  }
+
+  .stats-player {
+    grid-column: 8 / 13;
+    grid-row: 9 / 10;
+  }
+
+  .status-player {
+    grid-column: 6 / 8;
+    grid-row: 9 / 10;
   }
 
   .enemy {
@@ -70,9 +88,9 @@ watch(
     grid-row: 1 / 2;
   }
 
-  .stats-player {
-    grid-column: 8 / 13;
-    grid-row: 9 / 10;
+  .status-enemy {
+    grid-column: 6 / 8;
+    grid-row: 1 / 2;
   }
 }
 </style>
