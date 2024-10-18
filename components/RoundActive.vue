@@ -49,7 +49,7 @@ watch(
   grid-template-rows: repeat(12, 1fr);
 
   .ability-panel {
-    grid-column: 1 / 13;
+    grid-column: 8 / 13;
     grid-row: 10 / 13;
   }
 
@@ -61,20 +61,18 @@ watch(
 
   .enemy {
     grid-column: 8 / 13;
-    grid-row: 1 / 7;
+    grid-row: 1 / 8;
     border: 3px solid black;
   }
 
   .stats-enemy {
-    grid-column: 1 / 7;
+    grid-column: 1 / 6;
     grid-row: 1 / 2;
-    border: 3px solid black;
   }
 
   .stats-player {
-    grid-column: 7 / 13;
+    grid-column: 8 / 13;
     grid-row: 9 / 10;
-    border: 3px solid black;
   }
 }
 </style>

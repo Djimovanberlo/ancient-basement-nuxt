@@ -13,4 +13,11 @@ import { useCombatStore } from "~/store/useCombatStore";
 const combatStore = useCombatStore();
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+@import "../assets/css/panel.less";
+
+.stats-enemy {
+  padding: 30px;
+  .panel-brown();
+}
+</style>
