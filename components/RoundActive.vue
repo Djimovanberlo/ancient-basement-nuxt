@@ -3,8 +3,11 @@
     <AbilityPanel />
     <Player />
     <Enemy />
-    <StatsPlayer />
-    <StatsEnemy />
+    <Tooltip />
+    <Stats class="stats-player" :character="combatStore.player" />
+    <Status class="status-player" />
+    <Stats class="stats-enemy" :character="combatStore.enemy" />
+    <Status class="status-enemy" />
     <div>R: {{ gameStore.activeGame.roundNumber }}</div>
     <div>T: {{ gameStore.activeGame.turnNumber }}</div>
   </div>
@@ -49,9 +52,13 @@ watch(
   grid-template-rows: repeat(12, 1fr);
 
   .ability-panel {
-    grid-column: 1 / 13;
+    grid-column: 8 / 13;
     grid-row: 10 / 13;
-    border: 3px solid black;
+  }
+
+  .tooltip {
+    grid-column: 6 / 8;
+    grid-row: 10 / 13;
   }
 
   .player {
@@ -60,22 +67,30 @@ watch(
     border: 3px solid black;
   }
 
+  .stats-player {
+    grid-column: 8 / 13;
+    grid-row: 9 / 10;
+  }
+
+  .status-player {
+    grid-column: 6 / 8;
+    grid-row: 9 / 10;
+  }
+
   .enemy {
     grid-column: 8 / 13;
-    grid-row: 1 / 7;
+    grid-row: 1 / 8;
     border: 3px solid black;
   }
 
   .stats-enemy {
-    grid-column: 1 / 7;
+    grid-column: 1 / 6;
     grid-row: 1 / 2;
-    border: 3px solid black;
   }
 
-  .stats-player {
-    grid-column: 7 / 13;
-    grid-row: 9 / 10;
-    border: 3px solid black;
+  .status-enemy {
+    grid-column: 6 / 8;
+    grid-row: 1 / 2;
   }
 }
 </style>
