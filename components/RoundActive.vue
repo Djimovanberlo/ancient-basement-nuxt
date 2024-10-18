@@ -51,7 +51,6 @@ watch(
   .ability-panel {
     grid-column: 1 / 13;
     grid-row: 10 / 13;
-    border: 3px solid black;
   }
 
   .player {

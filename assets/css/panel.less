@@ -1,0 +1,13 @@
+@import "./colors.less";
+
+.panel(@background-color, @border-color, @border-color-light, @border-color-dark) {
+  background-color: @background-color;
+  border: 8px solid @border-color;
+  outline: 2px solid @border-color-dark;
+  box-shadow: -2px -2px 0 2px @border-color-light,
+    2px 2px 0 2px @border-color-dark;
+}
+
+.panel-brown {
+  .panel(@background-color-brown, @border-color-brown, @border-color-brown, @border-color-brown);
+}

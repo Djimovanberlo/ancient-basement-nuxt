@@ -24,9 +24,11 @@ const handleAbility = (ability: AbilityName) => {
 </script>
 
 <style lang="less" scoped>
+@import "../assets/css/panel.less";
+
 .ability-panel {
   display: grid;
-  background-color: lightgray;
+  .panel-brown();
 
   button {
     margin-left: auto;

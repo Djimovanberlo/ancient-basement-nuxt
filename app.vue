@@ -5,3 +5,5 @@ import Main from "./layout/Main.vue";
 <template>
   <Main />
 </template>
+
+<style lang="less"></style>
