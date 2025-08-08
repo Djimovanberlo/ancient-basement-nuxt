@@ -18,6 +18,5 @@ const combatStore = useCombatStore();
 .enemy {
   display: flex;
   justify-content: center;
-  gap: 1rem;
 }
 </style>

@@ -1,9 +1,11 @@
 <template>
   <div class="stats">
+    <span>name</span>
     <Healthbar
       :current-health="character.stats.currentHealth"
       :max-health="character.stats.maxHealth"
     />
+    <Status />
   </div>
 </template>
 
@@ -15,13 +17,18 @@ interface Props {
 defineProps<Props>();
 
 import type { Character } from "~/types/character";
+import Status from "./Status.vue";
 </script>
 
 <style lang="less" scoped>
 @import "../assets/css/panel.less";
 
 .stats {
-  padding: 30px;
+  padding: 3px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
   .panel-brown();
 }
 </style>

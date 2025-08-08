@@ -11,8 +11,6 @@
 <style lang="less" scoped>
 .status {
   display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border: 1px solid black;
+  gap: 5px;
 }
 </style>

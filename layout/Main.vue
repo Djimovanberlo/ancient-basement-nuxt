@@ -17,8 +17,7 @@ const gameStore = useGameStore();
 
 <style lang="less" scoped>
 @max-width: 1024px;
-// @max-height: 576px; //16:9
-@max-height: 768px; //4:3
+@max-height: 576px;
 
 main {
   width: 100%;
@@ -28,8 +27,9 @@ main {
 }
 
 .container {
-  height: min(90vh, @max-height);
-  width: min(90vw, @max-width);
+  // Change these for future viewports. Currently only portrait view on small screens is supported.
+  height: 100svh;
+  width: 100%;
 
   background-color: #f0f0f0;
   border: 3px solid rgb(13, 1, 90);

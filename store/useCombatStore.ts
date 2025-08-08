@@ -82,13 +82,15 @@ export const useCombatStore = defineStore("combat", () => {
         _executeEnemyAbility(AbilityName.Attack);
         playerCanAct.value = true;
       }, DEFAULT_TIMEOUT);
-    } else {
-      _executeEnemyAbility(AbilityName.Attack);
-      setTimeout(() => {
-        _executePlayerAbility(playerAbility);
-        playerCanAct.value = true;
-      }, DEFAULT_TIMEOUT);
+
+      return;
     }
+
+    _executeEnemyAbility(AbilityName.Attack);
+    setTimeout(() => {
+      _executePlayerAbility(playerAbility);
+      playerCanAct.value = true;
+    }, DEFAULT_TIMEOUT);
   };
 
   const updateEnemy = (enemyValue: Character) => (enemy.value = enemyValue);
