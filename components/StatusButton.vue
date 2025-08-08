@@ -1,14 +1,15 @@
 <template>
-  <button
+  <Button
     v-if="turns > 0"
     v-on:click="combatStore.tooltipContent = statusKey"
     v-on:mouseover="combatStore.tooltipContent = statusKey"
     v-on:mouseleave="combatStore.tooltipContent = ''"
     v-on:focus="combatStore.tooltipContent = statusKey"
-    class="status-button"
+    variant="square"
+    size="sm"
   >
     {{ statusKey.charAt(0) }}{{ turns }}
-  </button>
+  </Button>
 </template>
 
 <script setup lang="ts">
