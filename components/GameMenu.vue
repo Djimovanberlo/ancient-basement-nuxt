@@ -1,6 +1,8 @@
 <template>
   <div class="game-menu">
-    <button @click="gameStore.startGame()">Start game</button>
+    <Button variant="regular" size="md" @click="gameStore.startGame()">
+      Start game
+    </Button>
   </div>
 </template>
 

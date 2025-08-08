@@ -5,7 +5,7 @@
       :current-health="character.stats.currentHealth"
       :max-health="character.stats.maxHealth"
     />
-    <Status />
+    <Status v-if="character.status" :status-turns="character.status" />
   </div>
 </template>
 
@@ -24,7 +24,7 @@ import Status from "./Status.vue";
 @import "../assets/css/panel.less";
 
 .stats {
-  padding: 3px 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;

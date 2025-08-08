@@ -32,13 +32,13 @@ onMounted(() => {
     const isEpic = floorRandom(2) === 0; // 50% chance
 
     if (isAbility) {
-      const impossibleAbilties = [
-        ...combatStore.player.abilities,
+      const excludedAbilities = [
+        ...(combatStore.player.abilities || []),
         ...abilityRewards.map((ability) => ability.abilityName),
       ];
 
       const possibleAbilties = Object.values(AbilityName).filter(
-        (ability) => !impossibleAbilties.includes(ability)
+        (ability) => !excludedAbilities.includes(ability)
       );
 
       if (possibleAbilties.length === 0) {

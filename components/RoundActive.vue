@@ -84,7 +84,7 @@ watch(
     .stats-enemy,
     .combat-log,
     .tooltip {
-      width: 50%;
+      width: 12rem;
     }
 
     .combat-log {

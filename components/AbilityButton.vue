@@ -1,12 +1,16 @@
 <template>
-  <button
+  <Button
     class="ability-button"
     @click="handleAbility"
+    v-on:mouseover="combatStore.tooltipContent = props.ability"
+    v-on:mouseleave="combatStore.tooltipContent = ''"
     v-on:focus="combatStore.tooltipContent = props.ability"
+    variant="square"
+    size="md"
     ref="buttonEl"
   >
     {{ props.ability }}
-  </button>
+  </Button>
 </template>
 
 <script setup lang="ts">
@@ -22,6 +26,10 @@ const combatStore = useCombatStore();
 const buttonEl = ref<HTMLButtonElement>();
 const selectedAbility = ref<AbilityName | null>(null);
 
+onClickOutside(buttonEl, () => {
+  selectedAbility.value = null;
+});
+
 const handleAbility = () => {
   if (!combatStore.playerCanAct) return;
 
@@ -36,18 +44,3 @@ const handleAbility = () => {
   combatStore.tooltipContent = "";
 };
 </script>
-
-<style lang="less" scoped>
-.ability-button {
-  all: unset;
-  height: 10vh;
-  aspect-ratio: 1/1;
-  padding: 0.2rem;
-  text-align: center;
-  background-color: #444;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-}
-</style>
