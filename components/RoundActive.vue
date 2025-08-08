@@ -36,15 +36,20 @@ const saveRewards = async () => {
 
 watch(
   () => combatStore.player.stats.currentHealth,
-  (newVal) => {
-    if (newVal <= 0) gameStore.loseGame();
+  (playerHealth) => {
+    console.log("playerHealth", playerHealth);
+    if (playerHealth <= 0) {
+      gameStore.loseGame();
+      return;
+    }
   }
 );
 
 watch(
   () => combatStore.enemy.stats.currentHealth,
-  (newVal) => {
-    if (newVal <= 0) gameStore.winRound();
+  (enemyHealth) => {
+    console.log("enemyHealth", enemyHealth);
+    if (enemyHealth <= 0) gameStore.winRound();
   }
 );
 </script>

@@ -1,37 +1,27 @@
 <template>
   <div class="ability-panel">
-    <button
+    <AbilityButton
       v-for="ability in combatStore.player.abilities"
       :key="ability"
-      @click="handleAbility(ability)"
-    >
-      {{ ability }}
-    </button>
+      :ability="ability"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { useCombatStore } from "~/store/useCombatStore";
-import type { AbilityName } from "~/types/ability";
 
 const combatStore = useCombatStore();
-
-const handleAbility = (ability: AbilityName) => {
-  if (combatStore.playerCanAct) {
-    combatStore.executeTurn(ability);
-  }
-};
 </script>
 
 <style lang="less" scoped>
 @import "../assets/css/panel.less";
 
 .ability-panel {
-  display: grid;
-  .panel-brown();
+  overflow-x: auto;
+  display: flex;
+  gap: 0.5rem;
 
-  button {
-    margin-left: auto;
-  }
+  .panel-brown();
 }
 </style>

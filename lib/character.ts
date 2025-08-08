@@ -26,6 +26,8 @@ export const initPlayer = createCharacter({
     AbilityName.Heal,
     AbilityName.Attack,
     AbilityName.Cast,
+    AbilityName.Cast,
+    AbilityName.Cast,
   ],
   epicRewards: [],
 });

@@ -10,6 +10,7 @@ export const useCombatStore = defineStore("combat", () => {
   const playerCanAct = ref<boolean>(true);
   const player = ref<Character>(initPlayer);
   const enemy = ref<Character>(initEnemy);
+  const tooltipContent = ref<string>();
 
   // TODO think about let and const clearly, in terms calculating damage & applying additional effects
   const _executeAbility = (
@@ -22,9 +23,9 @@ export const useCombatStore = defineStore("combat", () => {
 
     const ability = abilitiesTable[abilityName];
     const damage = calculateDamage(sourceCopy, targetCopy, ability);
-    const updatedStats = applyDamage(targetCopy.stats, damage);
+    const updatedTargetStats = applyDamage(targetCopy.stats, damage);
 
-    targetCopy.stats = updatedStats;
+    targetCopy.stats = updatedTargetStats;
 
     if (!ability.additionalEffect) {
       return { updatedSource: sourceCopy, updatedTarget: targetCopy };
@@ -78,6 +79,7 @@ export const useCombatStore = defineStore("combat", () => {
 
     if (firstTurn === "player") {
       _executePlayerAbility(playerAbility);
+
       setTimeout(() => {
         _executeEnemyAbility(AbilityName.Attack);
         playerCanAct.value = true;
@@ -87,6 +89,7 @@ export const useCombatStore = defineStore("combat", () => {
     }
 
     _executeEnemyAbility(AbilityName.Attack);
+
     setTimeout(() => {
       _executePlayerAbility(playerAbility);
       playerCanAct.value = true;
@@ -101,5 +104,6 @@ export const useCombatStore = defineStore("combat", () => {
     updateEnemy,
     executeTurn,
     playerCanAct,
+    tooltipContent,
   };
 });
