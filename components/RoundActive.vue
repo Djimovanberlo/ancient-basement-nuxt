@@ -1,18 +1,24 @@
 <template>
   <div class="round-active">
-    <AbilityPanel />
-    <Player />
-    <Enemy />
-    <Tooltip />
-    <Stats class="stats-player" :character="combatStore.player" />
-    <Status class="status-player" />
-    <Stats class="stats-enemy" :character="combatStore.enemy" />
-    <Status class="status-enemy" />
-    <div>R: {{ gameStore.activeGame.roundNumber }}</div>
-    <div>T: {{ gameStore.activeGame.turnNumber }}</div>
+    <div class="sprites">
+      <Player />
+      <Enemy />
+    </div>
+    <div class="hud">
+      <Stats class="stats-enemy" :character="combatStore.enemy" />
+      <CombatLog />
+      <Tooltip />
+      <Stats class="stats-player" :character="combatStore.player" />
+      <AbilityPanel />
+    </div>
+    <!-- TEMP FOR DEV -->
+    <div class="round-info">
+      <div>R: {{ gameStore.activeGame.roundNumber }}</div>
+      <div>T: {{ gameStore.activeGame.turnNumber }}</div>
+      <button @click="saveRewards">SAVE</button>
+      <button @click="getRewards">GET</button>
+    </div>
   </div>
-  <button @click="saveRewards">SAVE</button>
-  <button @click="getRewards">GET</button>
 </template>
 
 <script setup lang="ts">
@@ -47,50 +53,51 @@ watch(
 .round-active {
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  position: relative;
 
-  .ability-panel {
-    grid-column: 8 / 13;
-    grid-row: 10 / 13;
+  .sprites {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .player,
+    .enemy {
+      flex: 1;
+      border: 1px solid black;
+    }
   }
 
-  .tooltip {
-    grid-column: 6 / 8;
-    grid-row: 10 / 13;
+  .hud {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+
+    .stats-player,
+    .stats-enemy,
+    .combat-log,
+    .tooltip {
+      width: 50%;
+    }
+
+    .combat-log {
+      margin-bottom: auto;
+    }
+
+    .stats-player,
+    .tooltip {
+      align-self: flex-end;
+    }
   }
 
-  .player {
-    grid-column: 1 / 6;
-    grid-row: 6 / 13;
-    border: 3px solid black;
-  }
-
-  .stats-player {
-    grid-column: 8 / 13;
-    grid-row: 9 / 10;
-  }
-
-  .status-player {
-    grid-column: 6 / 8;
-    grid-row: 9 / 10;
-  }
-
-  .enemy {
-    grid-column: 8 / 13;
-    grid-row: 1 / 8;
-    border: 3px solid black;
-  }
-
-  .stats-enemy {
-    grid-column: 1 / 6;
-    grid-row: 1 / 2;
-  }
-
-  .status-enemy {
-    grid-column: 6 / 8;
-    grid-row: 1 / 2;
+  // Temp for dev
+  .round-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: center;
   }
 }
 </style>

@@ -18,12 +18,13 @@ defineProps<Props>();
 <style lang="less" scoped>
 .healthbar {
   width: 100%;
-  height: 100%;
+  height: 40%;
   background-color: #333;
   border: 2px solid black;
 
   .current-health {
     height: 100%;
+    font-size: 8px;
     width: calc(v-bind(currentHealth) / v-bind(maxHealth) * 100%);
     background-color: green;
   }
