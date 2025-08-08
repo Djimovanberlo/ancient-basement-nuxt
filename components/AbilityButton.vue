@@ -2,6 +2,8 @@
   <button
     class="ability-button"
     @click="handleAbility"
+    v-on:mouseover="combatStore.tooltipContent = props.ability"
+    v-on:mouseleave="combatStore.tooltipContent = ''"
     v-on:focus="combatStore.tooltipContent = props.ability"
     ref="buttonEl"
   >
@@ -40,7 +42,7 @@ const handleAbility = () => {
 <style lang="less" scoped>
 .ability-button {
   all: unset;
-  height: 10vh;
+  height: 4rem;
   aspect-ratio: 1/1;
   padding: 0.2rem;
   text-align: center;

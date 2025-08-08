@@ -5,7 +5,7 @@
       :current-health="character.stats.currentHealth"
       :max-health="character.stats.maxHealth"
     />
-    <Status />
+    <Status v-if="character.status" :status-turns="character.status" />
   </div>
 </template>
 
