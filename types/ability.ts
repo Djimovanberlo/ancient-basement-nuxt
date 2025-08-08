@@ -1,6 +1,7 @@
 import type { Character } from "./character";
 import type { DamageType, ElementName } from "./element";
 
+// TODO: is it worth it to only save AbilityName in storage instead of the whole object?
 export interface Ability {
   name: AbilityName;
   power: number;
