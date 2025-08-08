@@ -1,10 +1,5 @@
 <template>
-  <button
-    v-bind="$attrs"
-    v-on="$listeners"
-    class="button"
-    :class="[size, variant]"
-  >
+  <button v-bind="$attrs" class="button" :class="[size, variant]">
     <slot />
   </button>
 </template>

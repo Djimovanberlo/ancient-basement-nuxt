@@ -1,8 +1,8 @@
 <template>
   <div class="round-active">
     <div class="sprites">
-      <Player />
-      <Enemy />
+      <CombatCharacter class="player" :character="combatStore.player" />
+      <CombatCharacter class="enemy" :character="combatStore.enemy" />
     </div>
     <div class="hud">
       <Stats class="stats-enemy" :character="combatStore.enemy" />
@@ -11,13 +11,13 @@
       <Stats class="stats-player" :character="combatStore.player" />
       <AbilityPanel />
     </div>
-    <!-- TEMP FOR DEV -->
-    <div class="round-info">
-      <div>R: {{ gameStore.activeGame.roundNumber }}</div>
-      <div>T: {{ gameStore.activeGame.turnNumber }}</div>
-      <button @click="saveRewards">SAVE</button>
-      <button @click="getRewards">GET</button>
-    </div>
+  </div>
+  <!-- TEMP FOR DEV -->
+  <div class="round-info">
+    <div>R: {{ gameStore.activeGame.roundNumber }}</div>
+    <div>T: {{ gameStore.activeGame.turnNumber }}</div>
+    <button @click="saveRewards">SAVE</button>
+    <button @click="getRewards">GET</button>
   </div>
 </template>
 
@@ -28,6 +28,10 @@ import { useGameStore } from "~/store/useGameStore";
 
 const gameStore = useGameStore();
 const combatStore = useCombatStore();
+
+const tooltipContent = ref<string>("");
+
+provide("tooltipContent", tooltipContent);
 
 const saveRewards = async () => {
   if (!combatStore.player.epicRewards) return;
@@ -54,15 +58,24 @@ watch(
 );
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .round-active {
   width: 100%;
   height: 100%;
   position: relative;
 
+  .hud,
   .sprites {
     position: absolute;
     inset: 0;
+    pointer-events: none;
+
+    * {
+      pointer-events: auto;
+    }
+  }
+
+  .sprites {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,13 +83,16 @@ watch(
     .player,
     .enemy {
       flex: 1;
-      border: 1px solid black;
+    }
+
+    .player {
+      .combat-character {
+        align-self: flex-end;
+      }
     }
   }
 
   .hud {
-    position: absolute;
-    inset: 0;
     display: flex;
     flex-direction: column;
 
@@ -87,13 +103,13 @@ watch(
       width: 12rem;
     }
 
-    .combat-log {
-      margin-bottom: auto;
-    }
-
     .stats-player,
     .tooltip {
       align-self: flex-end;
+    }
+
+    .combat-log {
+      margin-bottom: auto;
     }
   }
 

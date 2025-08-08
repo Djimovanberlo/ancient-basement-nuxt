@@ -2,9 +2,7 @@
   <Button
     class="ability-button"
     @click="handleAbility"
-    v-on:mouseover="combatStore.tooltipContent = props.ability"
-    v-on:mouseleave="combatStore.tooltipContent = ''"
-    v-on:focus="combatStore.tooltipContent = props.ability"
+    v-on:focus="tooltipContent = props.ability"
     variant="square"
     size="md"
     ref="buttonEl"
@@ -16,6 +14,7 @@
 <script setup lang="ts">
 import { useCombatStore } from "~/store/useCombatStore";
 import type { AbilityName } from "~/types/ability";
+import useSafeInject from "~/lib/useSafeInject";
 
 const props = defineProps<{
   ability: AbilityName;
@@ -23,6 +22,7 @@ const props = defineProps<{
 
 const combatStore = useCombatStore();
 
+const tooltipContent = useSafeInject<Ref<string>>("tooltipContent");
 const buttonEl = ref<HTMLButtonElement>();
 const selectedAbility = ref<AbilityName | null>(null);
 
@@ -35,12 +35,12 @@ const handleAbility = () => {
 
   if (!selectedAbility.value) {
     selectedAbility.value = props.ability;
-    combatStore.tooltipContent = props.ability;
+    tooltipContent.value = props.ability;
     return;
   }
 
   combatStore.executeTurn(selectedAbility.value);
   selectedAbility.value = null;
-  combatStore.tooltipContent = "";
+  tooltipContent.value = "";
 };
 </script>

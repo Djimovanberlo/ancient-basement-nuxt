@@ -10,7 +10,6 @@ export const useCombatStore = defineStore("combat", () => {
   const playerCanAct = ref<boolean>(true);
   const player = ref<Character>(initPlayer);
   const enemy = ref<Character>(initEnemy);
-  const tooltipContent = ref<string>();
 
   // TODO think about let and const clearly, in terms calculating damage & applying additional effects
   const _executeAbility = (
@@ -104,6 +103,5 @@ export const useCombatStore = defineStore("combat", () => {
     updateEnemy,
     executeTurn,
     playerCanAct,
-    tooltipContent,
   };
 });

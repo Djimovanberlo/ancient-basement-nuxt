@@ -1,10 +1,10 @@
 <template>
   <Button
     v-if="turns > 0"
-    v-on:click="combatStore.tooltipContent = statusKey"
-    v-on:mouseover="combatStore.tooltipContent = statusKey"
-    v-on:mouseleave="combatStore.tooltipContent = ''"
-    v-on:focus="combatStore.tooltipContent = statusKey"
+    v-on:click="tooltipContent = statusKey"
+    v-on:mouseover="tooltipContent = statusKey"
+    v-on:mouseleave="tooltipContent = ''"
+    v-on:focus="tooltipContent = statusKey"
     variant="square"
     size="sm"
   >
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCombatStore } from "~/store/useCombatStore";
+import useSafeInject from "~/lib/useSafeInject";
 
 interface Props {
   statusKey: string;
@@ -22,7 +22,7 @@ interface Props {
 
 defineProps<Props>();
 
-const combatStore = useCombatStore();
+const tooltipContent = useSafeInject<Ref<string>>("tooltipContent");
 </script>
 
 <style lang="less" scoped>

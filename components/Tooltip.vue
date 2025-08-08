@@ -1,17 +1,19 @@
 <template>
-  <div v-if="combatStore.tooltipContent" class="tooltip" ref="tooltipRef">
-    <p>{{ combatStore.tooltipContent }}</p>
+  <div v-if="tooltipContent" class="tooltip" ref="tooltipRef">
+    <p>{{ tooltipContent }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useCombatStore } from "~/store/useCombatStore";
+import useSafeInject from "~/lib/useSafeInject";
 
-const combatStore = useCombatStore();
 const tooltipRef = ref<HTMLDivElement>();
+const tooltipContent = useSafeInject<Ref<string>>("tooltipContent");
 
 onClickOutside(tooltipRef, () => {
-  combatStore.tooltipContent = "";
+  if (tooltipContent) {
+    tooltipContent.value = "";
+  }
 });
 </script>
 
