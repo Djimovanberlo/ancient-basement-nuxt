@@ -24,7 +24,7 @@ import Status from "./Status.vue";
 @import "../assets/css/panel.less";
 
 .stats {
-  padding: 3px 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
